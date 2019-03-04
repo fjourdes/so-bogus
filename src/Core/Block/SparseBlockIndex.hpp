@@ -254,6 +254,11 @@ struct SparseBlockIndexTraits<  SparseBlockIndex< Compressed, Index_, BlockPtr_,
 			return m_it != m_end ;
 		}
 
+		bool operator< (const InnerIterator& other) const
+		{
+			return m_it < other.m_it;
+		}
+
 		InnerIterator& operator++()
 		{
 			++ m_it ;

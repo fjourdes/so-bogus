@@ -232,6 +232,11 @@ struct SparseBlockIndexTraits<  SparseBlockIndex< true, Index_, BlockPtr_, Array
 			return ( (difference_type) m_it ) - ( difference_type ) other.m_it ;
 		}
 
+		bool operator< (const InnerIterator& other) const
+		{
+			return m_it < other.m_it;
+		}
+
 		Index operator* () const
 		{
 			return inner() ;
