@@ -56,7 +56,7 @@ public:
 
 protected:
 
-	BlockSolverBase( const BlockObjectBase< BlockMatrixType > * matrix = BOGUS_NULL_PTR(const BlockObjectBase< BlockMatrixType >),
+	BlockSolverBase( const BlockObjectBase< BlockMatrixType > * matrix = BOGUS_NULL_PTR( const ::bogus::BlockObjectBase< BlockMatrixType > ),
 					 unsigned maxIters = 0, Scalar tol = 0 )
 		: m_matrix( matrix ), m_maxIters( maxIters ), m_tol( tol )
 	{}

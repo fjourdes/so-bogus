@@ -108,6 +108,8 @@ endif()
 if( MSVC )
 		add_definitions( /DBOGUS_DONT_USE_BUILTIN_ATOMICS )
 		add_definitions( /wd4305 )
+		add_definitions( /bigobj )
+
 endif()
 
 include_directories( ${EXTERNAL_INCLUDES} )
