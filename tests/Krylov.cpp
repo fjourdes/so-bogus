@@ -6,8 +6,8 @@
 
 #include <iostream>
 
-#include "Core/Block.impl.hpp"
-#include "Core/BlockSolvers/Krylov.impl.hpp"
+#include <bogus/Core/Block.impl.hpp>
+#include <bogus/Core/BlockSolvers/Krylov.impl.hpp>
 
 #include "ResidualInfo.hpp"
 

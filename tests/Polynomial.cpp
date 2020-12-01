@@ -6,13 +6,13 @@
 
 #include <gtest/gtest.h>
 
-#include "Core/Utils/CppTools.hpp"
-#include "Core/Utils/Polynomial.hpp"
-#include "Core/Utils/Polynomial.impl.hpp"
+#include <bogus/Core/Utils/CppTools.hpp>
+#include <bogus/Core/Utils/Polynomial.hpp>
+#include <bogus/Core/Utils/Polynomial.impl.hpp>
 
-#include "Core/Eigen/EigenProblemTraits.hpp"
-#include "Core/Eigen/EigenLinearSolvers.hpp"
-#include "Extra/SOC/LocalSOCSolver.impl.hpp"
+#include <bogus/Core/Eigen/EigenProblemTraits.hpp>
+#include <bogus/Core/Eigen/EigenLinearSolvers.hpp>
+#include <bogus/Extra/SOC/LocalSOCSolver.impl.hpp>
 
 TEST( Polynomial, Quadratic )
 {

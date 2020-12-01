@@ -6,7 +6,7 @@
 #ifndef D6_TESTS_RESIDUAL_INFO_HH
 #define D6_TESTS_RESIDUAL_INFO_HH
 
-#include "Core/Utils/Signal.hpp"
+#include <bogus/Core/Utils/Signal.hpp>
 
 #include <string>
 

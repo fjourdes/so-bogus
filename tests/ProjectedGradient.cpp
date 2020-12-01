@@ -4,9 +4,9 @@
  * http://creativecommons.org/publicdomain/zero/1.0/
 */
 
-#include "Core/Block.impl.hpp"
-#include "Core/BlockSolvers/ProjectedGradient.impl.hpp"
-#include "Extra/SecondOrder.impl.hpp"
+#include <bogus/Core/Block.impl.hpp>
+#include <bogus/Core/BlockSolvers/ProjectedGradient.impl.hpp>
+#include <bogus/Extra/SecondOrder.impl.hpp>
 
 #include "ResidualInfo.hpp"
 #include "SmallFrictionPb.hpp"

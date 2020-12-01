@@ -4,8 +4,8 @@
  * http://creativecommons.org/publicdomain/zero/1.0/
 */
 
-#include <Core/Block.impl.hpp>
-#include <Core/Block.io.hpp>
+#include <bogus/Core/Block.impl.hpp>
+#include <bogus/Core/Block.io.hpp>
 #include <gtest/gtest.h>
 
 TEST( Map, SparseBlock )

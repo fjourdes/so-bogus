@@ -1,9 +1,9 @@
 
-#include "Core/Block.impl.hpp"
+#include <bogus/Core/Block.impl.hpp>
 
-#include "Core/BlockSolvers/ADMM.impl.hpp"
+#include <bogus/Core/BlockSolvers/ADMM.impl.hpp>
 
-#include "Extra/SecondOrder.impl.hpp"
+#include <bogus/Extra/SecondOrder.impl.hpp>
 
 #include "ResidualInfo.hpp"
 #include "SmallFrictionPb.hpp"

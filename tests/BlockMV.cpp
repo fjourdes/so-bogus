@@ -3,7 +3,7 @@
  * http://creativecommons.org/publicdomain/zero/1.0/
 */
 
-#include "Core/Block.impl.hpp"
+#include <bogus/Core/Block.impl.hpp>
 
 #include <Eigen/Core>
 

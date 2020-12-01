@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 
-#include "Core/Block.impl.hpp"
+#include <bogus/Core/Block.impl.hpp>
 
 #include <Eigen/LU>
 #include <Eigen/Cholesky>

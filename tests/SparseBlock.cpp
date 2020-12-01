@@ -5,8 +5,8 @@
 
 #include <iostream>
 
-#include "Core/Block.impl.hpp"
-#include "Core/Block.io.hpp"
+#include <bogus/Core/Block.impl.hpp>
+#include <bogus/Core/Block.io.hpp>
 
 #include <Eigen/Core>
 #include <Eigen/Sparse>
