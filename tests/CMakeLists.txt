@@ -1,4 +1,6 @@
+project(bogus_test)
 cmake_minimum_required(VERSION 2.8.2)
+
 
 if( TESTS_NAMES )
     SET( SRC_LIST ${TESTS_NAMES} )
@@ -20,9 +22,11 @@ if(UNIX)
   SET( GTEST_LINK_LIBRARIES ${GTEST_LINK_LIBRARIES} pthread )
 endif()
 
-include_directories( ../src ${source_dir}/include)
 
-add_executable(test${CMAKE_PROJECT_NAME} ${SRC_LIST})
-add_test( ${CMAKE_PROJECT_NAME} test${CMAKE_PROJECT_NAME} )
+add_executable(bogus_test ${SRC_LIST})
+target_link_libraries(bogus_test PUBLIC bogus ${GTEST_LINK_LIBRARIES} )
+target_include_directories(bogus_test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../src/)
+target_compile_options(bogus_test PUBLIC -DBOOST_ALL_NO_LIB)
+target_compile_options(bogus_test PUBLIC -DBOOST_ALL_DYN_LINK)
 
-target_link_libraries(test${CMAKE_PROJECT_NAME} ${EXTERNAL_LIBRARIES} ${GTEST_LINK_LIBRARIES} )
+add_test( NAME bogus_test COMMAND bogus_test )
