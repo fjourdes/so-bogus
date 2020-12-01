@@ -1,4 +1,4 @@
-project(bogus)
+project(so-bogus)
 cmake_minimum_required(VERSION 2.6)
 
 OPTION( TESTS "Build tests" ON )
@@ -17,36 +17,9 @@ OPTION( CPP11     "Build with c++11 standard" OFF )
 OPTION( STRICT    "Treat warnings as errors (-Werror)" OFF )
 OPTION( FAST_MATH "Enable unsafe compiler optimizations " ON )
 
-SET( BOGUS_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
-SET( CMAKE_MODULE_PATH ${BOGUS_ROOT}/cmake )
+SET( SOBOGUS_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
+SET( CMAKE_MODULE_PATH ${SOBOGUS_ROOT}/cmake )
 
-
-# Eigen
-FIND_PACKAGE(Eigen3 REQUIRED)
-SET( EXTERNAL_INCLUDES ${EIGEN3_INCLUDE_DIR} )
-SET( EXTERNAL_LIBRARIES "" )
-
-# OpenMP
-if( OPENMP )
-	FIND_PACKAGE(OpenMP)
-	if(OPENMP_FOUND)
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-		add_definitions(-DEIGEN_DONT_PARALLELIZE)
-	else()
-		set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas " )
-	endif()
-endif()
-
-# boost
-if( BOOST_SERIALIZATION )
-				find_package(Boost 1.36.0 COMPONENTS serialization)
-				if( Boost_FOUND )
-								add_definitions( -DBOGUS_WITH_BOOST_SERIALIZATION )
-								SET( EXTERNAL_INCLUDES ${EXTERNAL_INCLUDES} ${Boost_INCLUDE_DIR} )
-								SET( EXTERNAL_LIBRARIES ${EXTERNAL_LIBRARIES} ${Boost_LIBRARIES} )
-				endif()
-endif()
 
 # MKL
 if( MKL )
@@ -105,17 +78,8 @@ if ( GCC OR CLANG )
 				endif()
 endif()
 
-if( MSVC )
-		add_definitions( /DBOGUS_DONT_USE_BUILTIN_ATOMICS )
-		add_definitions( /wd4305 )
-		add_definitions( /bigobj )
-
-endif()
-
-include_directories( ${EXTERNAL_INCLUDES} )
-
 if( LIB )
-		add_subdirectory( src )
+		add_subdirectory( bogus )
 endif()
 if( TESTS )
 				enable_testing()
