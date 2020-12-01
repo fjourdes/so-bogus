@@ -35,10 +35,9 @@ namespace bogus
 template< unsigned Dimension > struct PrimalFrictionProblem ;
 template< unsigned Dimension > struct DualFrictionProblem ;
 
-class MecheFrictionProblem
-{
-public:
 
+struct BOGUS_API MecheFrictionProblemOptions
+{
 	enum Algorithm {
 		GaussSeidel = 0,
 		ProjectedGradient = 1,
@@ -47,31 +46,37 @@ public:
 		DualAMA
 	};
 
-	struct Options {
-		int maxThreads ;        //!< Maximum number of threads that the GS will use.
+	int maxThreads;        //!< Maximum number of threads that the GS will use.
 
-		unsigned maxIters ;     //!< Max number of iterations. 0 means GS's default
-		unsigned cadouxIters ;  //!< If staticProblem is false and cadouxIters is greater than zero, use the Cadoux algorithm to solve the friction problem.
+	unsigned maxIters;     //!< Max number of iterations. 0 means GS's default
+	unsigned cadouxIters;  //!< If staticProblem is false and cadouxIters is greater than zero, use the Cadoux algorithm to solve the friction problem.
 
-		double tolerance ;      //!< Solver tolerance
-		bool useInfinityNorm ;  //!< Whether to use the infinity norm to evaluate the residual of the friction problem,
+	double tolerance;      //!< Solver tolerance
+	bool useInfinityNorm;  //!< Whether to use the infinity norm to evaluate the residual of the friction problem,
 
-		Algorithm algorithm ;   //! Solver algorithm; \sa GaussSeidel \sa ProjectedGradient
+	Algorithm algorithm;   //! Solver algorithm; \sa GaussSeidel \sa ProjectedGradient
 
-		// Solver-specific options
+	// Solver-specific options
 
-		double gsRegularization ; //!< GS proximal regularization coefficient
-		bool   gsColoring ;       //!< Use coloring for parallel GS; slower but deterministic
-		int    gsSkipIters;       //!< Number of frozen iterations for sleeping heuristics
-		bool   tryZeroAsWell ;    //!< Try to see if starting at zero yields a lower initial error
+	double gsRegularization; //!< GS proximal regularization coefficient
+	bool   gsColoring;       //!< Use coloring for parallel GS; slower but deterministic
+	int    gsSkipIters;       //!< Number of frozen iterations for sleeping heuristics
+	bool   tryZeroAsWell;    //!< Try to see if starting at zero yields a lower initial error
 
-		projected_gradient::Variant pgVariant ; //! Variant of the Projected Gradient algorithm
+	projected_gradient::Variant pgVariant; //! Variant of the Projected Gradient algorithm
 
-		double admmProjStepSize ;
-		double admmFpStepSize ;
+	double admmProjStepSize;
+	double admmFpStepSize;
 
-		Options() ;
-	};
+	MecheFrictionProblemOptions();
+};
+
+class BOGUS_API MecheFrictionProblem
+{
+public:
+
+	using Algorithm = MecheFrictionProblemOptions::Algorithm;
+	using Options   = MecheFrictionProblemOptions;
 
 	MecheFrictionProblem() ;
 	~MecheFrictionProblem() ;

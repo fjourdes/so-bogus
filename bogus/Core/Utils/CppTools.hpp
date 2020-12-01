@@ -18,6 +18,21 @@
 namespace bogus
 {
 
+#ifndef WIN32
+#	define BOGUS_EXPORT_DYNAMIC_LIBRARY
+#   define BOGUS_IMPORT_DYNAMIC_LIBRARY
+#else
+#	define BOGUS_EXPORT_DYNAMIC_LIBRARY __declspec( dllexport )
+#   define BOGUS_IMPORT_DYNAMIC_LIBRARY __declspec( dllimport )
+#endif
+
+
+#ifdef BUILD_BOGUS
+#	define BOGUS_API BOGUS_EXPORT_DYNAMIC_LIBRARY
+#else
+#	define BOGUS_API BOGUS_IMPORT_DYNAMIC_LIBRARY
+#endif
+
 #ifndef BOGUS_HAS_CPP11
 #define BOGUS_HAS_CPP11 (__cplusplus >= 201103L)
 #endif

@@ -47,7 +47,7 @@
 namespace bogus
 {
 
-MecheFrictionProblem::Options::Options()
+MecheFrictionProblemOptions::MecheFrictionProblemOptions()
     : maxThreads(0), maxIters(0), cadouxIters(0),
       tolerance(0), useInfinityNorm( false ),
       algorithm( GaussSeidel ),
@@ -250,7 +250,7 @@ double MecheFrictionProblem::solve(
 	options.useInfinityNorm = useInfinityNorm ;
 
 	if( useProjectedGradient )
-		options.algorithm = ProjectedGradient ;
+		options.algorithm = Algorithm::ProjectedGradient ;
 
 	if( staticProblem ) {
 		problemRegularization = regularization ;
@@ -281,7 +281,7 @@ double MecheFrictionProblem::solve(
 	double res ;
 
 
-	if( options.algorithm == ADMM || options.algorithm == DualAMA )
+	if( options.algorithm == Algorithm::ADMM || options.algorithm == Algorithm::DualAMA )
 	{
 		// Primal-dual solve
 
@@ -294,7 +294,7 @@ double MecheFrictionProblem::solve(
 
 		m_timer.reset();
 
-		if( options.algorithm == DualAMA )
+		if( options.algorithm == Algorithm::DualAMA )
 		{
 
 			bogus::DualAMA< bogus::PrimalFrictionProblem<3u>::HType > dama ;
@@ -327,7 +327,7 @@ double MecheFrictionProblem::solve(
 		Signal< unsigned, double > callback ;
 		callback.connect( *this, &MecheFrictionProblem::ackCurrentResidual );
 
-		if( options.algorithm == MatrixFreeGaussSeidel )
+		if( options.algorithm == Algorithm::MatrixFreeGaussSeidel )
 		{
 			typename PrimalFrictionProblem< 3u >::ProductGaussSeidelType gs ;
 			if( options.tolerance   != 0. ) gs.setTol( options.tolerance );
@@ -353,7 +353,7 @@ double MecheFrictionProblem::solve(
 			// Proper solving
 
 			m_timer.reset();
-			if( options.algorithm == ProjectedGradient ) {
+			if( options.algorithm == Algorithm::ProjectedGradient ) {
 
 				DualFrictionProblem< 3u >::ProjectedGradientType pg ;
 				if( options.tolerance != 0. ) pg.setTol( options.tolerance );
