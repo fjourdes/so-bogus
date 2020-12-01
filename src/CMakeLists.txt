@@ -1,21 +1,40 @@
+project(bogus)
 
 execute_process( COMMAND ../updateCMakeSources.sh WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} )
 file(STRINGS CMakeSources.txt SRC_LIST)
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -S --verbose-asm " )
+find_package(Eigen3 REQUIRED)
+find_package(OpenMP QUIET)
+
+add_library(bogus SHARED ${SRC_LIST})
+target_link_libraries(bogus PUBLIC Eigen3::Eigen)
+target_include_directories(bogus PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../)
+if(OpenMP_FOUND)
+    target_link_libraries(bogus PUBLIC OpenMP::OpenMP_CXX)
+endif()
+if( BOOST_SERIALIZATION )
+    find_package(Boost COMPONENTS serialization REQUIRED )
+    target_link_libraries(bogus PUBLIC Boost::serialization Boost::disable_autolinking Boost::dynamic_linking)
+    target_compile_options(bogus PUBLIC -DBOOST_ALL_NO_LIB)
+    target_compile_options(bogus PUBLIC -DBOOST_ALL_DYN_LINK)
+    target_compile_options(bogus PUBLIC -DBOGUS_WITH_BOOST_SERIALIZATION)
+endif()
+if( MSVC )
+    target_compile_options(bogus PUBLIC -DBOGUS_DONT_USE_BUILTIN_ATOMICS)
+    target_compile_options(bogus PRIVATE /wd4305)
+    target_compile_options(bogus PRIVATE /bigobj)
+endif()
 
 if( WITH_2D )
-        add_definitions( -DBOGUS_INSTANTIATE_2D_SOC )
+    target_compile_options(bogus PUBLIC -DBOGUS_INSTANTIATE_2D_SOC )
 endif()
 if( WITH_3D )
-        add_definitions( -DBOGUS_INSTANTIATE_3D_SOC )
+    target_compile_options(bogus PUBLIC -DBOGUS_INSTANTIATE_3D_SOC )
 endif()
 if( WITH_DYNAMIC )
-        add_definitions( -DBOGUS_INSTANTIATE_DYNAMIC_SOC )
+    target_compile_options(bogus PUBLIC -DBOGUS_INSTANTIATE_DYNAMIC_SOC )
 endif()
 
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -S --verbose-asm " )
-
-add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC_LIST})
-target_link_libraries(${CMAKE_PROJECT_NAME} ${EXTERNAL_LIBRARIES} )
 
 FOREACH(item ${SRC_LIST})
   STRING(REGEX MATCH "^Interfaces/.+\\.hpp$" item ${item})
@@ -24,11 +43,10 @@ FOREACH(item ${SRC_LIST})
   ENDIF(item)
 ENDFOREACH(item ${SRC_LIST})
 
-INSTALL( DIRECTORY Core DESTINATION include/${CMAKE_PROJECT_NAME} )
-INSTALL( DIRECTORY Extra DESTINATION include/${CMAKE_PROJECT_NAME} )
-INSTALL( FILES ${INTERFACES} DESTINATION include/${CMAKE_PROJECT_NAME}/Interfaces )
-INSTALL( TARGETS ${CMAKE_PROJECT_NAME}
+INSTALL( DIRECTORY Core DESTINATION include/bogus )
+INSTALL( DIRECTORY Extra DESTINATION include/bogus )
+INSTALL( FILES ${INTERFACES} DESTINATION include/bogus/Interfaces )
+INSTALL( TARGETS bogus
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib
   ARCHIVE DESTINATION lib )
-
