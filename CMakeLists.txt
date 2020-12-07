@@ -21,6 +21,11 @@ endif()
 
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
+# Set the output directories globally
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 # FindMKL (build)
 configure_file( ${SOBOGUS_ROOT}/cmake/FindMKL.cmake
                 ${CMAKE_BINARY_DIR}/Bogus/FindMKL.cmake COPYONLY)
