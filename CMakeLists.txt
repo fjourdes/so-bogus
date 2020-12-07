@@ -5,37 +5,41 @@ OPTION( TESTS "Build tests" ON )
 OPTION( APPS "Build apps" ON )
 OPTION( LIB "Build lib" ON )
 
-OPTION( OPENMP "Use OpenMP" ON )
-OPTION( BOOST_SERIALIZATION "Use boost::serialization" ON )
-OPTION( MKL "Use mkl" OFF )
 
-OPTION( WITH_2D "Build lib with 2d support" ON )
-OPTION( WITH_3D "Build lib with 3d support" ON )
-OPTION( WITH_DYNAMIC "Build lib with dynamic dim support" OFF )
-
-OPTION( CPP11     "Build with c++11 standard" OFF )
 OPTION( STRICT    "Treat warnings as errors (-Werror)" OFF )
 OPTION( FAST_MATH "Enable unsafe compiler optimizations " ON )
 
 SET( SOBOGUS_ROOT ${CMAKE_CURRENT_SOURCE_DIR} )
 SET( CMAKE_MODULE_PATH ${SOBOGUS_ROOT}/cmake )
 
-
-# MKL
-if( MKL )
-		find_package( MKL )
-		if( MKL_FOUND )
-								add_definitions( -DBOGUS_WITH_MKL )
-								SET( EXTERNAL_INCLUDES ${EXTERNAL_INCLUDES} ${MKL_INCLUDE_DIRS} )
-								SET( EXTERNAL_LIBRARIES ${EXTERNAL_LIBRARIES} ${MKL_LIBRARIES} mkl_intel_lp64 mkl_intel_thread mkl_core iomp5 )
-		endif()
-endif()
-
 # Build types and processor flags
 
 if (NOT CMAKE_BUILD_TYPE)
   message(STATUS "No build type selected, default to Release")
   set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+
+# FindMKL (build)
+configure_file( ${SOBOGUS_ROOT}/cmake/FindMKL.cmake
+                ${CMAKE_BINARY_DIR}/Bogus/FindMKL.cmake COPYONLY)
+
+# FindMKL (installed)
+install(FILES ${SOBOGUS_ROOT}/cmake/FindMKL.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Bogus/FindMKL.cmake )
+
+
+# Require C++11 compiler
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Visual studio solution directories.
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+if((CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT))
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "Prefix prepended to install directories" FORCE)
+    message(STATUS "Setting default CMAKE_INSTALL_PREFIX to: ${CMAKE_INSTALL_PREFIX}")
 endif()
 
 if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
@@ -47,9 +51,6 @@ endif()
 if ( GCC OR CLANG )
 				SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra " )
 				SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-ignored-attributes " ) #gcc 6 + eigen
-				if( CPP11 )
-						SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations " )
-				endif()
 				if( STRICT )
 						SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror " )
 				endif()

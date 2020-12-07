@@ -2,6 +2,8 @@ project(bogus_test)
 cmake_minimum_required(VERSION 2.8.2)
 
 
+find_package(Bogus REQUIRED)
+
 if( TESTS_NAMES )
     SET( SRC_LIST ${TESTS_NAMES} )
     MESSAGE( STATUS "Building tests: " ${SRC_LIST} )
@@ -24,7 +26,7 @@ endif()
 
 
 add_executable(bogus_test ${SRC_LIST})
-target_link_libraries(bogus_test PUBLIC bogus ${GTEST_LINK_LIBRARIES} )
+target_link_libraries(bogus_test PUBLIC Bogus::bogus ${GTEST_LINK_LIBRARIES} )
 target_include_directories(bogus_test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../src/)
 target_compile_options(bogus_test PUBLIC -DBOOST_ALL_NO_LIB)
 target_compile_options(bogus_test PUBLIC -DBOOST_ALL_DYN_LINK)
