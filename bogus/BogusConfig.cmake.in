@@ -31,7 +31,7 @@ if(BOGUS_WITH_OPENMP)
 endif()
 
 if( NOT TARGET Bogus::bogus)
-    include("${CMAKE_CURRENT_LIST_DIR}/DiscregridTargets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/BogusTargets.cmake")
 endif()
 
 check_required_components(Bogus)

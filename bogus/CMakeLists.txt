@@ -78,9 +78,9 @@ install(TARGETS bogus
         ARCHIVE DESTINATION  "${CMAKE_INSTALL_LIBDIR}"
 )
 
-install( DIRECTORY Core DESTINATION include/bogus )
-install( DIRECTORY Extra DESTINATION include/bogus )
-install( FILES ${INTERFACES} DESTINATION include/bogus/Interfaces )
+install( DIRECTORY Core DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/bogus )
+install( DIRECTORY Extra DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/bogus )
+install( FILES ${INTERFACES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/bogus/Interfaces )
 
 include(CMakePackageConfigHelpers)
 
