@@ -164,6 +164,7 @@ void convert( const SparseBlockMatrixBase< BogusDerived >& source,
 
 	}
 
+	dest.finalize();
 }
 
 } // naemspace bogus
