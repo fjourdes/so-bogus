@@ -122,7 +122,14 @@ public:
 	//! Same, using a std::vector
 	void setRows( const std::vector< unsigned > &rowsPerBlock )
 	{
-		setRows( rowsPerBlock.size(), &rowsPerBlock[0] ) ;
+		if (rowsPerBlock.empty())
+		{
+			setRows( 0, nullptr);
+		}
+		else
+		{
+			setRows( rowsPerBlock.size(), &rowsPerBlock[0] ) ;
+		}
 	}
 	//! Same, setting each block to have exactly \p rowsPerBlock
 	void setRows( const Index nBlocks, const Index rowsPerBlock )
@@ -144,7 +151,14 @@ public:
 	//! Same, using a std::vector
 	void setCols( const std::vector< unsigned > &colsPerBlock )
 	{
-		setCols( colsPerBlock.size(), &colsPerBlock[0] ) ;
+		if (colsPerBlock.empty())
+		{
+			setCols(0, nullptr);
+		}
+		else
+		{
+			setCols(colsPerBlock.size(), &colsPerBlock[0]);
+		}
 	}
 	//! Same, setting each block to have exactly \p rowsPerBlock
 	void setCols( const Index nBlocks, const Index colsPerBlock )
